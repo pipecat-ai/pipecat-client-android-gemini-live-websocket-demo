@@ -15,6 +15,7 @@ import ai.pipecat.client.types.ServiceConfig
 import ai.pipecat.client.types.Tracks
 import ai.pipecat.client.types.Transcript
 import ai.pipecat.client.types.TransportState
+import ai.pipecat.client.types.Value
 import ai.pipecat.gemini_multimodal_websocket_demo.utils.Timestamp
 import android.content.Context
 import android.util.Log
@@ -72,7 +73,12 @@ class VoiceClientManager(private val context: Context) {
             params = RTVIClientParams(
                 baseUrl = null,
                 config = GeminiLiveWebsocketTransport.buildConfig(
-                    apiKey = apiKey
+                    apiKey = apiKey,
+                    systemInstruction = Value.Object(
+                        "parts" to Value.Object(
+                            "text" to Value.Str("You are a helpful assistant")
+                        )
+                    )
                 )
             )
         )
